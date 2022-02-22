@@ -42,35 +42,35 @@ Route::get('/recent-posts/{days_ago?}', function ($days_ago = 0) {
     }
 })->name('posts.recent.index')->middleware('auth');
 
-Route::prefix('/fun')->name('fun.')->group(function () use ($posts) {
+// Route::prefix('/fun')->name('fun.')->group(function () use ($posts) {
 
-    Route::get('/responses', function () use ($posts) {
-        return response($posts, 201)
-            ->header('Content-Type', 'application/json')
-            ->cookie('MY_COOKIE', 'Piotr Jura', 3600);
-    })->name('responses');
+//     Route::get('/responses', function () use ($posts) {
+//         return response($posts, 201)
+//             ->header('Content-Type', 'application/json')
+//             ->cookie('MY_COOKIE', 'Piotr Jura', 3600);
+//     })->name('responses');
 
-    Route::get('/redirect', function () {
-        return redirect('/contact');
-    })->name('redirect');
+//     Route::get('/redirect', function () {
+//         return redirect('/contact');
+//     })->name('redirect');
 
-    Route::get('/back', function () {
-        return back();
-    })->name('back');
+//     Route::get('/back', function () {
+//         return back();
+//     })->name('back');
 
-    Route::get('/named-route', function () {
-        return redirect()->route('posts.show', ['id' => 1]);
-    })->name('named-route');
+//     Route::get('/named-route', function () {
+//         return redirect()->route('posts.show', ['id' => 1]);
+//     })->name('named-route');
 
-    Route::get('/away', function () {
-        return redirect()->away('https://www.google.com');
-    })->name('away');
+//     Route::get('/away', function () {
+//         return redirect()->away('https://www.google.com');
+//     })->name('away');
 
-    Route::get('/json', function () use ($posts) {
-        return response()->json($posts);
-    })->name('json');
+//     Route::get('/json', function () use ($posts) {
+//         return response()->json($posts);
+//     })->name('json');
 
-    Route::get('/download', function () {
-        return response()->download(public_path('/daniel.jpg'), 'face.jpg');
-    })->name('download');
-});
+//     Route::get('/download', function () {
+//         return response()->download(public_path('/daniel.jpg'), 'face.jpg');
+//     })->name('download');
+// });
