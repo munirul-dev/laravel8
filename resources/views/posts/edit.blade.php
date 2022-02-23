@@ -9,7 +9,7 @@
         @method('PUT')
         @include('posts.partials.form')
         <div>
-            <button type="submit" value="Update">Update</button>
+            <button type="submit" value="Update" class="btn btn-primary btn-block">Update</button>
         </div>
     </form>
 
