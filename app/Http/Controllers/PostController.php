@@ -6,6 +6,7 @@ use App\Http\Requests\StorePost;
 use App\Models\BlogPost;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -16,7 +17,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index', ['posts' => BlogPost::orderBy('created_at', 'desc')->take(5)->get()]);
+        // $posts = BlogPost::orderBy('created_at')->all();
+        // $posts = BlogPost::with('comments')->orderBy('created_at')->get();
+        $posts = BlogPost::withCount('comments')->orderBy('created_at')->get();
+        return view('posts.index', ['posts' => $posts]);
     }
 
     /**
