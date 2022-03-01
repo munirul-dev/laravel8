@@ -26,8 +26,8 @@
 
         <div class="form-group">
             <div class="form-check">
-                <label for="remember" class="form-check-label">Remember Me?</label>
                 <input type="checkbox" name="remember" value="{{ old('remember') ? 'checked' : '' }}" class="form-check-input">
+                <label for="remember" class="form-check-label">Remember Me?</label>
             </div>
         </div>
 
