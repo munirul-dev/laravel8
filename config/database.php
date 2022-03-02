@@ -2,6 +2,20 @@
 
 use Illuminate\Support\Str;
 
+if (config('app.env') === 'local') {
+    $mysql_host = '127.0.0.1';
+    $mysql_port = '8889';
+    $mysql_database = 'laravel8';
+    $mysql_username = 'root';
+    $mysql_password = 'root';
+} else {
+    $mysql_host = env('DB_HOST', '127.0.0.1');
+    $mysql_port = env('DB_PORT', '3306');
+    $mysql_database = env('DB_DATABASE', 'forge');
+    $mysql_username = env('DB_USERNAME', 'forge');
+    $mysql_password = env('DB_PASSWORD', '');
+}
+
 return [
 
     /*
@@ -51,11 +65,11 @@ return [
         'mysql' => [
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'host' => $mysql_host,
+            'port' => $mysql_port,
+            'database' => $mysql_database,
+            'username' => $mysql_username,
+            'password' => $mysql_password,
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',

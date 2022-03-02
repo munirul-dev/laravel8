@@ -23,6 +23,14 @@ class UserFactory extends Factory
         ];
     }
 
+    public function custom()
+    {
+        return $this->state([
+            'name' => 'Munirul Haikal',
+            'email' => 'munirulhaikal@gmail.com'
+        ]);
+    }
+
     /**
      * Indicate that the model's email address should be unverified.
      *
