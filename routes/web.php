@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home'])->name('index');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+Route::get('/secret', [HomeController::class, 'secret'])
+    ->name('secret')
+    ->middleware('can:home.secret');
 Route::resource('posts', PostController::class);
 
 Auth::routes();
