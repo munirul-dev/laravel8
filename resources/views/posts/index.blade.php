@@ -17,56 +17,26 @@
         <div class="col-4">
             <div class="container">
 
-                <div class="row mb-4">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Most Commented</h5>
-                            <h6 class="card-subtitle text-muted">What people are currently talking about</h6>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @forelse ($mostCommented as $post)
-                                <li class="list-group-item">
-                                    <a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
-                                    <p class="m-0 text-muted">{{ $post->comments_count }} comments</p>
-                                </li>
-                            @empty
-                                <li class="list-group-item">No posts found.</li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
+                <x-card title="Most Commented" subtitle="What people are currently talking about">
+                    @slot('items')
+                        @forelse ($mostCommented as $post)
+                            <li class="list-group-item">
+                                <a href="{{ route('posts.show', $post->id) }}">{{ $post->title }}</a>
+                                <p class="m-0 text-muted">{{ $post->comments_count }} comments</p>
+                            </li>
+                        @empty
+                            <li class="list-group-item">No posts found.</li>
+                        @endforelse
+                    @endslot
+                </x-card>
 
-                <div class="row mb-4">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Most Active</h5>
-                            <h6 class="card-subtitle text-muted">Users with the most posts written</h6>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @forelse ($mostActive as $user)
-                                <li class="list-group-item">{{ $user->name }}</li>
-                            @empty
-                                <li class="list-group-item">No users found.</li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
+                <x-card title="Most Active" subtitle="Users with the most posts written">
+                    @slot('items', collect($mostActive)->pluck('name'))
+                </x-card>
 
-                <div class="row mb-4">
-                    <div class="card w-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Most Active Last Month</h5>
-                            <h6 class="card-subtitle text-muted">Users with the most posts written last month</h6>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                            @forelse ($mostActiveLastMonths as $user)
-                                <li class="list-group-item">{{ $user->name }}</li>
-                            @empty
-                                <li class="list-group-item">No users found.</li>
-                            @endforelse
-                        </ul>
-                    </div>
-                </div>
+                <x-card title="Most Active Last Month" subtitle="Users with the most posts written last month">
+                    @slot('items', collect($mostActiveLastMonths)->pluck('name'))
+                </x-card>
 
             </div>
         </div>

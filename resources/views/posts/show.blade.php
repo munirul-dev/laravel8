@@ -4,13 +4,16 @@
 
 @section('content')
 
-    <h1>{{ $post->title }}</h1>
-    <p>{{ $post->content }}</p>
-    <p class="text-muted">Added {{ $post->created_at->diffForHumans() }}</p>
+    <h1>
+        {{ $post->title }}
+        <x-badge type="success" show="{{ now()->diffInMinutes($post->created_at) < 5 }}">
+            New!
+        </x-badge>
+    </h1>
 
-    @if (now()->diffInMinutes($post->created_at) < 5)
-        <div class="alert alert-info">New!</div>
-    @endif
+    <p>{{ $post->content }}</p>
+    <x-updated date="{{ $post->created_at->diffForHumans() }}" name="{{ $post->user->name }}"></x-updated>
+    <x-updated date="{{ $post->updated_at->diffForHumans() }}">Last updated</x-updated>
 
     <hr>
 
@@ -18,7 +21,7 @@
 
     @forelse ($post->comments as $comment)
         <p class="mb-0">{{ $comment->content }}</p>
-        <p class="text-muted">Added {{ $comment->created_at->diffForHumans() }}</p>
+        <x-updated date="{{ $comment->created_at->diffForHumans() }}">Commented</x-updated>
     @empty
         <p>No comments yet.</p>
     @endforelse

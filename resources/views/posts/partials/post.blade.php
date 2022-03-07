@@ -8,10 +8,10 @@
     </del>
 @endif
 
-<p class="mb-0 text-muted">Added {{ $post->created_at->diffForHumans() }} by {{ $post->user->name }}</p>
+<x-updated date="{{ $post->created_at->diffForHumans() }}" name="{{ $post->user->name }}"></x-updated>
 
 @if ($post->comments_count)
-    <p class="mb-0">{{ $post->comments_count }} comments</p>
+    <p>{{ $post->comments_count }} comments</p>
 @else
     <p>No comments yet</p>
 @endif
@@ -21,7 +21,7 @@
         <a href="{{ route('posts.edit', ['post' => $post->id]) }}" class="btn btn-primary">Edit</a>
     @endcan
 
-    @unless ($post->trashed())
+    @unless($post->trashed())
         @can('delete', $post)
             <form class="d-inline" action="{{ route('posts.destroy', ['post' => $post->id]) }}" method="post">
                 @csrf
