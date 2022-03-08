@@ -13,7 +13,9 @@
 
     <p>{{ $post->content }}</p>
     <x-updated date="{{ $post->created_at->diffForHumans() }}" name="{{ $post->user->name }}"></x-updated>
-    <x-updated date="{{ $post->updated_at->diffForHumans() }}">Last updated</x-updated>
+    <x-updated date="{{ $post->updated_at->diffForHumans() }}">Updated</x-updated>
+
+    <p>Currently read by {{ $counter }} people</p>
 
     <hr>
 
