@@ -14,7 +14,7 @@ class PostController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except('index', 'show');
     }
 
     /**
@@ -24,23 +24,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $mostCommented = Cache::tags(['blog-post'])->remember('blog-post-commented', now()->addMinutes(60), function () {
-            return BlogPost::mostCommented()->take(5)->get();
-        });
-
-        $mostActive = Cache::remember('users-most-active', now()->addMinutes(60), function () {
-            return User::withMostBlogPosts()->take(5)->get();
-        });
-
-        $mostActiveLastMonths = Cache::remember('users-most-active-last-month', now()->addMinutes(60), function () {
-            return User::withMostBlogPostsLastMonth()->take(5)->get();
-        });
-
         return view('posts.index', [
-            'posts' => BlogPost::latest()->withCount('comments')->with('user')->get(),
-            'mostCommented' => $mostCommented,
-            'mostActive' => $mostActive,
-            'mostActiveLastMonths' => $mostActiveLastMonths
+            'posts' => BlogPost::latest()->withCount('comments')->with('user', 'tags')->get()
         ]);
     }
 
@@ -81,7 +66,7 @@ class PostController extends Controller
         $blogPost = Cache::tags(['blog-post'])->remember("blog-post-{$id}", now()->addMinutes(60), function () use ($id) {
             return BlogPost::with(['comments' => function ($query) {
                 return $query->latest();
-            }])->findOrFail($id);
+            }], 'tags', 'user')->findOrFail($id);
         });
 
         $sessionId = session()->getId();
