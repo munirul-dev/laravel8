@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use App\Models\BlogPost;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -14,7 +16,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+        Model::class => 'App\Policies\ModelPolicy',
         BlogPost::class => 'App\Policies\BlogPostPolicy',
+        User::class => 'App\Policies\UserPolicy'
     ];
 
     /**
@@ -29,9 +33,9 @@ class AuthServiceProvider extends ServiceProvider
         // Gate::resource('posts', 'App\Policies\BlogPostPolicy');
 
         Gate::before(function ($user, $ability) {
-            if ($user->is_admin && in_array($ability, ['update', 'delete'])) {
-                return true;
-            }
+            // if ($user->is_admin && in_array($ability, ['update', 'delete'])) {
+            //     return true;
+            // }
         });
 
         Gate::define('home.secret', function ($user) {

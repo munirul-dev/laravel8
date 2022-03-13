@@ -8,7 +8,7 @@
     </del>
 @endif
 
-<x-updated :date="$post->created_at->diffForHumans()" :name="$post->user->name"></x-updated>
+<x-updated :date="$post->created_at->diffForHumans()" :name="$post->user->name" :userId="$post->user->id"></x-updated>
 <x-tags :tags="$post->tags"></x-tags>
 
 @if ($post->comments_count)

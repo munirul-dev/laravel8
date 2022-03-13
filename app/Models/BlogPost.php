@@ -31,8 +31,9 @@ class BlogPost extends Model
         return $this->belongsToMany(Tag::class);
     }
 
-    public function image() {
-        return $this->hasOne(Image::class);
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function scopeLatest(Builder $query)

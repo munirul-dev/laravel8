@@ -56,7 +56,7 @@ class PostController extends Controller
             $path = $request->file('thumbnail')->store('thumbnails');
             // Storage::putFileAs('thumbnails', $file, $blogPost->id . '.' . $file->guessExtension());
             $blogPost->image()->save(
-                Image::create(['path' => $path])
+                Image::make(['path' => $path])
             );
         }
 
@@ -148,7 +148,7 @@ class PostController extends Controller
                 $post->image->path = $path;
                 $post->image->save();
             } else {
-                $post->image()->save(Image::create(['path' => $path]));
+                $post->image()->save(Image::make(['path' => $path]));
             }
         }
 
