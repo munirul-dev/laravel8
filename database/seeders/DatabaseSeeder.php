@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +21,7 @@ class DatabaseSeeder extends Seeder
         }
 
         Cache::tags(['blog-post'])->flush();
-
+        $this->clearStorage();
         $this->call([
             UsersTableSeeder::class,
             BlogPostTableSeeder::class,
@@ -28,5 +29,11 @@ class DatabaseSeeder extends Seeder
             TagsTableSeeder::class,
             BlogPostTagTableSeeder::class,
         ]);
+    }
+
+    public function clearStorage()
+    {
+        Storage::delete(Storage::allFiles('avatars'));
+        Storage::delete(Storage::allFiles('thumbnails'));
     }
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostCommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostTagController;
+use App\Http\Controllers\UserCommentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +31,7 @@ Route::get('/secret', [HomeController::class, 'secret'])
 Route::resource('posts', PostController::class);
 Route::get('/posts/tag/{tag}', [PostTagController::class, 'index'])->name('posts.tags.index');
 Route::resource('posts.comments', PostCommentController::class)->only(['store']);
+Route::resource('users.comments', UserCommentController::class)->only(['store']);
 
 Route::resource('users', UserController::class)->only(['show', 'edit', 'update']);
 

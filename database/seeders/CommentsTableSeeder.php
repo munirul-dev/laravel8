@@ -17,14 +17,22 @@ class CommentsTableSeeder extends Seeder
     public function run()
     {
         $posts = BlogPost::all();
-        if ($posts->count() === 0) {
-            $this->command->error("There are no blog posts to seed comments to.");
+        $users = User::all();
+
+        if ($posts->count() === 0 || $users->count() === 0) {
+            $this->command->error("There are no blog posts or users to seed comments to.");
             return;
         } else {
             $commentsCount = (int)$this->command->ask('How many comments do you want to generate?', 150);
-            $users = User::all();
             Comment::factory($commentsCount)->make()->each(function ($comment) use ($posts, $users) {
-                $comment->blog_post_id = $posts->random()->id;
+                $comment->commentable_id = $posts->random()->id;
+                $comment->commentable_type = BlogPost::class;
+                $comment->user_id = $users->random()->id;
+                $comment->save();
+            });
+            Comment::factory($commentsCount)->make()->each(function ($comment) use ($users) {
+                $comment->commentable_id = $users->random()->id;
+                $comment->commentable_type = User::class;
                 $comment->user_id = $users->random()->id;
                 $comment->save();
             });
