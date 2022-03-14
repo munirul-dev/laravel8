@@ -53,6 +53,11 @@ class User extends Authenticatable
         });
     }
 
+    public function scopeThatIsAnAdmin(Builder $query)
+    {
+        return $query->where('is_admin', true);
+    }
+
     /**
      * The attributes that should be cast.
      *
