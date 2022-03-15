@@ -2,7 +2,12 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -34,8 +39,26 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            //
+        // $this->reportable(function (Throwable $e) {
+        //     //
+        // });
+
+        $this->renderable(function (Throwable $exception, $request) {
+            if ($exception instanceof ModelNotFoundException && $request->expectsJson()) {
+                return response()->json(['message' => 'Resource not found'], 404);
+            }
+
+            if ($exception instanceof NotFoundHttpException && $request->expectsJson()) {
+                return Route::respondWithRoute('api.fallback');
+            }
+
+            if ($exception instanceof AuthorizationException && $request->expectsJson()) {
+                return response()->json(['message' => $exception->getMessage()], $exception->getCode());
+            }
+
+            if ($exception instanceof AccessDeniedHttpException && $request->expectsJson()) {
+                return response()->json(['message' => $exception->getMessage()], $exception->getStatusCode());
+            }
         });
     }
 }

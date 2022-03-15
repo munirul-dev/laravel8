@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\BlogPost;
 use App\Models\User;
+use App\Policies\CommentPolicy;
 // use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -18,7 +19,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         // Model::class => 'App\Policies\ModelPolicy',
         BlogPost::class => 'App\Policies\BlogPostPolicy',
-        User::class => 'App\Policies\UserPolicy'
+        User::class => 'App\Policies\UserPolicy',
+        CommentPolicy::class => 'App\Policies\CommentPolicy'
     ];
 
     /**
