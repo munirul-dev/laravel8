@@ -36,13 +36,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
-        'remember_token',
-        'email',
-        'email_verified_at',
-        'created_at',
-        'updated_at',
-        'is_admin',
-        'locale'
+        'remember_token'
     ];
 
     public function scopeWithMostBlogPosts(Builder $query)
