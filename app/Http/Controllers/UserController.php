@@ -90,6 +90,10 @@ class UserController extends Controller
                 );
             }
         }
+
+        $user->locale = $request->locale;
+        $user->save();
+
         return redirect()->back()->with('status', 'Your profile was updated!');
     }
 

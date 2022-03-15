@@ -30,7 +30,7 @@
             <x-updated :date="$post->updated_at->diffForHumans()">Updated</x-updated>
             <x-tags :tags="$post->tags"></x-tags>
 
-            <p>Currently read by {{ $counter }} people</p>
+            {{ trans_choice('messages.people.reading', $counter) }}
 
             <h4>Comments</h4>
 
